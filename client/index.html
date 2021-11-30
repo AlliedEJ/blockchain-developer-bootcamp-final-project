@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/nft.css">
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--web3.js-->
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <title>NFT Creation Station</title>
+</head>
+<body>
+    <nav id="navbar-myApp" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top justify-content-between">
+        <a class="navbar-brand" href="#">NFT Creation Station</a>
+        <button id="connect-meta" class="btn btn-outline-success my-2 my-sm-0">Connect MetaMask</button>
+    </nav>
+    
+    <div id="jumboHead" class="jumbotron">
+        <br><br>
+    </div>
+    
+    <div class="container-fluid">
+        <div id="mm-msg" class="alert alert-info mb-3"></div>
+    </div>
+
+    <div class="container-fluid" id="nft-create" style="display: none">
+        <div class="row ml-1">
+            <h3>Create Your NFT:</h3>
+        </div>
+        <form method="POST" id="meta-form">
+            <div class="form-group">
+                <label for="nft-name">NFT Name</label>
+                <input type="text" class="form-control" id="nft-name" placeholder="Enter your unique NFT name" name="nftName" required>
+            </div>
+            <div class="form-group">
+                <label for="nft-image">NFT Image Link</label>
+                <input type="text" class="form-control" id="nft-image" placeholder="Link Your Image" name="nftImage" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="nft-description">NFT Description:</label>
+                <textarea class="form-control" id="nft-description" placeholder="Describe Your NFT" name="nftDescription" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-info" id="nft-metadata">Create Meta</button>
+            <button type="button" class="btn btn-warning ml-2 text-white" style="display: none" id="nft-mint">Mint</button>
+        </form>
+    </div>
+
+    <div class="container-fluid" id="nft-portfolio" style="display: none">
+        <br><hr><br>
+        <div class="row ml-2">
+            <h3>Your NFT Portfolio:</h3>
+            <button class="btn btn-outline-info ml-2" id="nft-refresh">&#8635;</button>
+        </div>
+
+        <div class="alert alert-info mt-3" id="portfolio-msg" style="display: none">There are no NFTs associated with this address.</div>
+
+        <div id="nftsRow" class="row">
+            <!-- NFTs LOAD HERE -->
+        </div>    
+    </div>
+
+    <div id="nftTemplate" style="display: none;">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card bg-light mt-3">
+            <img alt="140x140" class="card-img-top img-rounded img-center" style="width: 100%;" src="#">
+            <div class="card-body">
+              <h4 class="card-title">NFT Title Name</h4>
+              <strong>Description</strong>: <span class="nft-description">Amazing NFT</span><br/>
+              <button class="btn btn-outline-success btn-nft mt-2" type="button" data-id="0">Display</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!--Dapp JavaScript-->
+    <script type="text/javascript" src="js/dapp.js"></script>  
+</body>
+</html>

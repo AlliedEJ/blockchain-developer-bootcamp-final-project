@@ -1,0 +1,150 @@
+<style type="text/css">
+		
+		body {
+			position: relative;
+			margin:0px;
+			padding:0px;
+		}
+		
+		#jumboHead {
+			background-image: url("img/pug.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+			text-align: left;
+			color:white;
+		}
+		
+		.footer {
+			text-align: center;
+			margin:0px;
+			background-color:#e9ecef;
+			padding-top:40px;
+			padding-bottom:40px;
+		}
+		
+		.footer2 {
+			text-align: center;
+			background-color:#dee0e2;
+		}
+		
+		#jumboHR {
+			border-color:white;
+			width:250px;
+		}
+		
+		#midText {
+			text-align:center;
+		}
+		
+		#appStoreImg{
+			width:20%;
+		}
+		
+		#back{
+			background-image:url("img/contactBack.png");
+			background-size:cover;
+			height:700px;
+		}
+
+		.jumboHeadPort {
+			background-image: url("img/city2.png");
+			background-repeat: no-repeat;
+			background-size: cover;
+			text-align: center;
+			color:white;
+		}
+		
+		.jumboHRPort {
+			border-color:white;
+			width:250px;
+		}
+
+		.img-tag {
+			padding:5px;
+		}
+	
+		.img-tag2 {
+			margin-left:150px;
+			padding:0px 5px 5px 5px;
+		}
+	
+		.img-border {
+			border:1px black solid;			
+		}
+		
+		@media (max-width: 768px) {
+			#goodHope {
+				display:none;
+			}
+			#bio {
+				width:100%;
+			}
+		}
+		
+		@media (min-width: 768px) {
+		  /* show 3 items */
+		  .carousel-inner .active,
+		  .carousel-inner .active + .carousel-item,
+		  .carousel-inner .active + .carousel-item + .carousel-item {
+			display: block;
+		  }
+
+		  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+		  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+		  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+			transition: none;
+		  }
+
+		  .carousel-inner .carousel-item-next,
+		  .carousel-inner .carousel-item-prev {
+			position: relative;
+			transform: translate3d(0, 0, 0);
+		  }
+
+		  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+			position: absolute;
+			top: 0;
+			right: -33.3333%;
+			z-index: -1;
+			display: block;
+			visibility: visible;
+		  }
+
+		  /* left or forward direction */
+		  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+		  .carousel-item-next.carousel-item-left + .carousel-item,
+		  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+		  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+			position: relative;
+			transform: translate3d(-100%, 0, 0);
+			visibility: visible;
+		  }
+
+		  /* farthest right hidden item must be abso position for animations */
+		  .carousel-inner .carousel-item-prev.carousel-item-right {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			display: block;
+			visibility: visible;
+		  }
+
+		  /* right or prev direction */
+		  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+		  .carousel-item-prev.carousel-item-right + .carousel-item,
+		  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+		  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+			position: relative;
+			transform: translate3d(100%, 0, 0);
+			visibility: visible;
+			display: block;
+			visibility: visible;
+		  }
+		  /* Required for newer Bootstrap versions */
+		  .carousel-item { 
+		  margin-right: auto !important; }
+		}
+	
+
+</style>
