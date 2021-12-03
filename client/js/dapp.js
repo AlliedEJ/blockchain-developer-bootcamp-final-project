@@ -15,9 +15,10 @@
 // 4) Display NFTs in portfolio section use PetShop as guide
 // 5) Cleanup UI & Backend Code 
 // --add mintABI as a JSON GET
-// 6) Add NFT metadata on chain as a struct (see Supply Chain contract)
-// 7) Identify tests and modifiers to meet submission standards
-// **8) Spin up web server & deploy on Rinkeby
+// 6) Add NFT Marketplace Smart Contract
+// 7) Create interface for Marketplace & ability to set NFTs on marketplace & purchase from marketplace
+// ) Identify tests and modifiers to meet submission standards
+// **) Spin up web server & deploy on Rinkeby
 
 //Contract Details
 const mintAddress = "0x98AD0cFC3781FbaF063747a459FC8ff69d4F701a";
