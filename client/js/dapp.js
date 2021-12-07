@@ -21,10 +21,16 @@
 // **) Spin up web server & deploy on Rinkeby
 
 //Contract Details
-const mintAddress = "0x98AD0cFC3781FbaF063747a459FC8ff69d4F701a";
+const mintAddress = "0x2ea68e1e966db4Bae10ea1809361C7cE9380c3c5";
 window.addEventListener('load', async () =>{
   await $.getJSON("../blockchain/build/contracts/NftCreator.json", function(data){
     mintABI = data.abi;
+  });
+});
+const marketAddress = "0x98AD0cFC3781FbaF063747a459FC8ff69d4F701a";
+window.addEventListener('load', async () =>{
+  await $.getJSON("../blockchain/build/contracts/Market.json", function(data){
+    marketABI = data.abi;
   });
 });
 
@@ -88,12 +94,12 @@ contractMint.onclick = async() => {
     var web3 = new Web3(window.ethereum);
     var NftCreator = new web3.eth.Contract(mintABI, mintAddress);
     NftCreator.setProvider(window.ethereum);
-    await NftCreator.methods.createNFT(uniqueURI).send({from: ethereum.selectedAddress});
+    await NftCreator.methods.createNft(uniqueURI).send({from: ethereum.selectedAddress});
     document.querySelector("#nft-mint").style.display = "none";
   };
 
 //Refresh Portfolio
-currentURILength = 0;
+var currentURILength = 0;
 var portfolioRefresh = document.querySelector("#nft-refresh");
 portfolioRefresh.onclick = async() => {
   var web3 = new Web3(window.ethereum);
@@ -108,7 +114,7 @@ portfolioRefresh.onclick = async() => {
     console.log("You have " + tokenBalance + " NFTs associated with this address: " + ethAddress);
     
     // Call for Owned Token IDs
-    var ownedTokens = [];
+    ownedTokens = [];
     var tokenTotal = await NftCreator.methods.tokenCount().call()
     console.log("This is how many tokens the contract has minted " + tokenTotal)
     for(var i = 1; i <= tokenTotal; i++){
@@ -117,12 +123,11 @@ portfolioRefresh.onclick = async() => {
         ownedTokens.push(i);
       }
     };
-    console.log(ownedTokens);
+    console.log(ownedTokens + " Token IDs");
     
     // Call for Owned Token URIs
-    var arrayLength = ownedTokens.length;
     var ownedURI = [];
-    for(var i = 0; i < arrayLength; i++){
+    for(var i = 0; i < ownedTokens.length; i++){
       var token = ownedTokens[i];
       var tokenURI = await NftCreator.methods.tokenURI(token).call()
       ownedURI.push(tokenURI)
@@ -134,18 +139,33 @@ portfolioRefresh.onclick = async() => {
     // Populate Token URI data on Front End
     var difference = ownedURI.length - currentURILength;
     for (var i = ownedURI.length - difference; i < ownedURI.length; i++){
-      $.getJSON(ownedURI[i], function(data) {
+      await $.getJSON(ownedURI[i], function(data) {
         var nftsRow = $('#nftsRow');
         var nftTemplate = $('#nftTemplate');
 
         nftTemplate.find('.card-title').text(data.name);
         nftTemplate.find('img').attr('src', data.image);
-        nftTemplate.find('.nft-description').text(data.description);
-        // nftTemplate.find('.btn-nft').attr('data-id', data[i].id);
-
+        nftTemplate.find('.nft-description').text(data.description);        
+        
         nftsRow.append(nftTemplate.html());
-      }); 
+      });
     };
     currentURILength = currentURILength + difference;
+    
+    // Transfer NFT to Market
+    var buttonArray = $(".btn-nft");
+    for (i=0; i < ownedTokens.length; i++){
+      await buttonArray.eq(i).attr("data-id", ownedTokens[i]);
+    }
+
+    for (var i = 0; i < buttonArray.length; i++) {
+      buttonArray[i].addEventListener('click', async () =>{   
+        console.log("You clicked:", $(this).attr("data-id"));
+        // var market = new web3.eth.Contract(marketABI, marketAddress);
+        // market.setProvider(window.ethereum);
+        // var tokenDataId = $(this).attr("data-id");
+        // await market.methods.addToMarket(mintAddress, tokenDataId, 1).send({from: ethereum.selectedAddress})
+      });
+    }
   };
 };
