@@ -1,24 +1,10 @@
 //TO DO:
-// 1) Detect MetaMask and allow user to connect to MetaMask
-// 2) Put mint function together so user can mint NFTs
-// -Need to generate a tokenURI for input into the mint function
-// -Need to put together correctly formatted JSON
-// --- Search - "save the inputs of a form as JSON using javascript"
-// --- Search - "how to use require in the browser"
-// -JSON needs to be auto placed at a hosting provider
-// -URI needs to directly link to hosted JSON
-// 3) Pull created JSONs so they display in the Portfolio Section
-// --First check '_balance' to see if address has any NFTS (if it does move forward)
-// --tokenIDs is a incremented number perform a loop based on the total tokenID
-// --Run '_ownerOf' to see which tokenID the address owns
-// --Run tokenURI against the owned tokens to get URI access JSON and display accordingly
-// 4) Display NFTs in portfolio section use PetShop as guide
-// 5) Cleanup UI & Backend Code 
-// --add mintABI as a JSON GET
-// 6) Add NFT Marketplace Smart Contract
-// 7) Create interface for Marketplace & ability to set NFTs on marketplace & purchase from marketplace
-// ) Identify tests and modifiers to meet submission standards
-// **) Spin up web server & deploy on Rinkeby
+// ) Finalize all Smart contracts w/ comments
+// ) Add peripheral content 'modifier' & 'security' to git
+// ) Understand the 'Price' Formats
+// ) Refactor button refresh and metamask connect to clean up need to always refresh page & 'currentLength'
+// ) Identify tests to meet submission standards
+// ) Spin up web server & deploy on Rinkeby
 
 //Contract Details
 const mintAddress = "0x2ea68e1e966db4Bae10ea1809361C7cE9380c3c5";
@@ -114,7 +100,7 @@ portfolioRefresh.onclick = async() => {
     console.log("You have " + tokenBalance + " NFTs associated with this address: " + ethAddress);
     
     // Call for Owned Token IDs
-    ownedTokens = [];
+    var ownedTokens = [];
     var tokenTotal = await NftCreator.methods.tokenCount().call()
     console.log("This is how many tokens the contract has minted " + tokenTotal)
     for(var i = 1; i <= tokenTotal; i++){
@@ -154,17 +140,16 @@ portfolioRefresh.onclick = async() => {
     
     // Transfer NFT to Market
     var buttonArray = $(".btn-nft");
-    for (i=0; i < ownedTokens.length; i++){
-      await buttonArray.eq(i).attr("data-id", ownedTokens[i]);
+    for (var i = 0; i < buttonArray.length; i++){
+      buttonArray.eq(i).attr("data-id", ownedTokens[i]);
     }
 
     for (var i = 0; i < buttonArray.length; i++) {
-      buttonArray[i].addEventListener('click', async () =>{   
-        console.log("You clicked:", $(this).attr("data-id"));
-        // var market = new web3.eth.Contract(marketABI, marketAddress);
-        // market.setProvider(window.ethereum);
-        // var tokenDataId = $(this).attr("data-id");
-        // await market.methods.addToMarket(mintAddress, tokenDataId, 1).send({from: ethereum.selectedAddress})
+      buttonArray[i].addEventListener('click', async (button) =>{
+        var market = new web3.eth.Contract(marketABI, marketAddress);
+        market.setProvider(window.ethereum);
+        var tokenDataId = button.target.getAttribute('data-id');
+        await market.methods.addToMarket(mintAddress, tokenDataId, 1).send({from: ethAddress});
       });
     }
   };
