@@ -1,8 +1,5 @@
 //TO DO:
-// ) Finalize all Smart contracts w/ comments
-// ) Add peripheral content 'modifier' & 'security' to git
-// ) Understand the 'Price' Formats
-// ) Refactor button refresh and metamask connect to clean up need to always refresh page & 'currentLength'
+// ) Review JS & html code for cleanup and testing
 // ) Identify tests to meet submission standards
 // ) Spin up web server & deploy on Rinkeby
 
@@ -22,20 +19,20 @@ window.addEventListener('load', async () =>{
 
 //Detect and Connect MetaMask
 window.addEventListener('load', function (){
-    if(typeof window.ethereum !== "undefined"){
-        console.log("window.ethereum has been detected");
-        if(window.ethereum.isMetaMask === true){
-            console.log("MetMask is active")
-            document.querySelector("#mm-msg").innerHTML = "MetaMask Has Been Detected. Please connect your MetaMask Account.";
-        } else {
-            console.log("MetaMask has not been detected");
-            document.querySelector("#mm-msg").innerHTML = "MetaMask has not been detected. Please install MetaMask for your browser: <a href='https://metamask.io/' target='_blank'>MetaMask</a>";
-        }
-    } else {
-        console.log("window.ethereum has not been detected")
-        document.querySelector("#mm-msg").innerHTML = "MetaMask has not been detected. Please install MetaMask for your browser: <a href='https://metamask.io/' target='_blank'>MetaMask</a>";
+  if(typeof window.ethereum !== "undefined"){
+      console.log("window.ethereum has been detected");
+      if(window.ethereum.isMetaMask === true){
+          console.log("MetMask is active")
+          document.querySelector("#mm-msg").innerHTML = "MetaMask Has Been Detected. Please connect your MetaMask Account.";
+      } else {
+          console.log("MetaMask has not been detected");
+          document.querySelector("#mm-msg").innerHTML = "MetaMask has not been detected. Please install MetaMask for your browser: <a href='https://metamask.io/' target='_blank'>MetaMask</a>";
+      }
+  } else {
+      console.log("window.ethereum has not been detected")
+      document.querySelector("#mm-msg").innerHTML = "MetaMask has not been detected. Please install MetaMask for your browser: <a href='https://metamask.io/' target='_blank'>MetaMask</a>";
 
-    }
+  }
 });
 
 var metaMaskConnect = document.querySelector("#connect-meta");
@@ -49,8 +46,8 @@ metaMaskConnect.onclick = async () => {
 };
 
 //POST JSON File
-$("#meta-form").submit(function (e){
-    e.preventDefault();
+$("#meta-form").submit(function (button){
+    button.preventDefault();
     var tokenName = $("#nft-name").val();
     var tokenImage = $("#nft-image").val();
     var tokenDescription = $("#nft-description").val();
@@ -58,7 +55,6 @@ $("#meta-form").submit(function (e){
     var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
     var filepath ="json/" + tokenName + "-" + time + ".json";
     uniqueURI = "http://127.0.0.1:5500/server/" + filepath;
-    console.log(uniqueURI)
     $.ajax({
         type: "POST",
         url: "http://localhost:4000/json",
@@ -85,9 +81,17 @@ contractMint.onclick = async() => {
   };
 
 //Refresh Portfolio
-var currentURILength = 0;
 var portfolioRefresh = document.querySelector("#nft-refresh");
 portfolioRefresh.onclick = async() => {
+  
+  //Remove old card listings
+  var rowParent = document.querySelector("#nftsRow");
+  if (rowParent.firstChild){
+    while (rowParent.firstChild) {
+      rowParent.removeChild(rowParent.firstChild);
+    };
+  };
+
   var web3 = new Web3(window.ethereum);
   var NftCreator = new web3.eth.Contract(mintABI, mintAddress);
   NftCreator.setProvider(window.ethereum);
@@ -97,7 +101,7 @@ portfolioRefresh.onclick = async() => {
     document.querySelector("#portfolio-msg").style.display = "block";
   } else {
     document.querySelector("#portfolio-msg").style.display = "none";
-    console.log("You have " + tokenBalance + " NFTs associated with this address: " + ethAddress);
+    console.log("You have " + tokenBalance + " NFT(s) associated with this address: " + ethAddress);
     
     // Call for Owned Token IDs
     var ownedTokens = [];
@@ -107,9 +111,9 @@ portfolioRefresh.onclick = async() => {
       var tokenOwner = await NftCreator.methods.ownerOf(i).call()
       if (ethAddress.toLowerCase() == tokenOwner.toLowerCase()){
         ownedTokens.push(i);
-      }
+      };
     };
-    console.log(ownedTokens + " Token IDs");
+    console.log("You have these Token IDs associated with this address " + ownedTokens);
     
     // Call for Owned Token URIs
     var ownedURI = [];
@@ -118,13 +122,10 @@ portfolioRefresh.onclick = async() => {
       var tokenURI = await NftCreator.methods.tokenURI(token).call()
       ownedURI.push(tokenURI)
     };
-    console.log(ownedURI);
-    console.log(ownedURI.length + " ownedURI length");
-    console.log(currentURILength + " currentURI length");
+    console.log("You have these Token URIs associated with this address " + ownedURI);
     
     // Populate Token URI data on Front End
-    var difference = ownedURI.length - currentURILength;
-    for (var i = ownedURI.length - difference; i < ownedURI.length; i++){
+     for (var i = 0; i < ownedURI.length; i++){
       await $.getJSON(ownedURI[i], function(data) {
         var nftsRow = $('#nftsRow');
         var nftTemplate = $('#nftTemplate');
@@ -136,21 +137,35 @@ portfolioRefresh.onclick = async() => {
         nftsRow.append(nftTemplate.html());
       });
     };
-    currentURILength = currentURILength + difference;
-    
-    // Transfer NFT to Market
-    var buttonArray = $(".btn-nft");
-    for (var i = 0; i < buttonArray.length; i++){
-      buttonArray.eq(i).attr("data-id", ownedTokens[i]);
-    }
+     
+    // Set Price & Transfer to Marketplace
+    var priceButtonArray = $(".btn-price")
+    for (var i = 0; i <= priceButtonArray.length-1; i++) {
+      priceButtonArray[i].addEventListener('click', function(button){
+        var priceInput = button.target.previousElementSibling.value;
+        if (priceInput > 0){
+          button.target.nextElementSibling.setAttribute("data-price", priceInput);
+          button.target.nextElementSibling.style.display = "inline";
+        } else {
+          alert("Price must be set to a value greater than 0.")
+        };
+      });
+    };
 
-    for (var i = 0; i < buttonArray.length; i++) {
-      buttonArray[i].addEventListener('click', async (button) =>{
+    var nftButtonArray = $(".btn-nft")
+    for (var i = 0; i < nftButtonArray.length-1; i++){
+      nftButtonArray.eq(i).attr("data-id", ownedTokens[i]);
+    };
+
+    for (var i = 0; i < nftButtonArray.length-1; i++) {
+      nftButtonArray[i].addEventListener('click', async (button) =>{
         var market = new web3.eth.Contract(marketABI, marketAddress);
         market.setProvider(window.ethereum);
         var tokenDataId = button.target.getAttribute('data-id');
-        await market.methods.addToMarket(mintAddress, tokenDataId, 1).send({from: ethAddress});
+        var ethPrice = parseFloat(button.target.getAttribute('data-price'));
+        var weiPrice = ethPrice * 10**18;
+        await market.methods.addToMarket(mintAddress, tokenDataId, weiPrice.toString()).send({from: ethAddress});
       });
-    }
+    };
   };
 };
