@@ -1,6 +1,7 @@
 //TO DO:
 // ) Spin up web server & deploy on Rinkeby
 // ) Complete README.md
+// ) Do video demo
 
 //Contract Details
 const mintAddress = "0x2ea68e1e966db4Bae10ea1809361C7cE9380c3c5";
