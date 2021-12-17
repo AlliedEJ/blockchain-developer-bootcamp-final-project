@@ -1,7 +1,6 @@
 //TO DO:
-// ) Review JS & html code for cleanup and testing
-// ) Identify tests to meet submission standards
 // ) Spin up web server & deploy on Rinkeby
+// ) Complete README.md
 
 //Contract Details
 const mintAddress = "0x2ea68e1e966db4Bae10ea1809361C7cE9380c3c5";
