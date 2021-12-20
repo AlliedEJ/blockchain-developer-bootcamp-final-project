@@ -1,16 +1,20 @@
 //TO DO:
 // ) Spin up web server & deploy on Rinkeby
 // ) Complete README.md
-// ) Do video demo
+// ) Complete video demo
+
+//Server Details
+const jsonLink = "http://localhost:5500/server";
+const serverPost = "http://localhost:4000/json";
 
 //Contract Details
-const mintAddress = "0x2ea68e1e966db4Bae10ea1809361C7cE9380c3c5";
+const mintAddress = "0x083EeC77fFd57632B12a4663B58d4aC7E130A39f";
 window.addEventListener('load', async () =>{
   await $.getJSON("../blockchain/build/contracts/NftCreator.json", function(data){
     mintABI = data.abi;
   });
 });
-const marketAddress = "0x98AD0cFC3781FbaF063747a459FC8ff69d4F701a";
+const marketAddress = "0x8C791a287389c48AFF087F93c3b8E4D83D06FAf8";
 window.addEventListener('load', async () =>{
   await $.getJSON("../blockchain/build/contracts/Market.json", function(data){
     marketABI = data.abi;
@@ -53,11 +57,11 @@ $("#meta-form").submit(function (button){
     var tokenDescription = $("#nft-description").val();
     var today = new Date();
     var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
-    var filepath ="json/" + tokenName + "-" + time + ".json";
-    uniqueURI = "http://127.0.0.1:5500/server/" + filepath;
+    var filepath ="/json/" + tokenName + "-" + time + ".json";
+    uniqueURI = jsonLink + filepath;
     $.ajax({
         type: "POST",
-        url: "http://localhost:4000/json",
+        url: serverPost,
         data: {
             "name": tokenName,
             "image": tokenImage,

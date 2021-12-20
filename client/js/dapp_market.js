@@ -1,11 +1,11 @@
 //Contract Details
-const mintAddress = "0x2ea68e1e966db4Bae10ea1809361C7cE9380c3c5";
+const mintAddress = "0x083EeC77fFd57632B12a4663B58d4aC7E130A39f";
 window.addEventListener('load', async () =>{
   await $.getJSON("../blockchain/build/contracts/NftCreator.json", function(data){
     mintABI = data.abi;
   });
 });
-const marketAddress = "0x98AD0cFC3781FbaF063747a459FC8ff69d4F701a";
+const marketAddress = "0x8C791a287389c48AFF087F93c3b8E4D83D06FAf8";
 window.addEventListener('load', async () =>{
   await $.getJSON("../blockchain/build/contracts/Market.json", function(data){
     marketABI = data.abi;
@@ -111,15 +111,15 @@ marketRefresh.onclick = async () =>{
   //Purchase NFT
   var buttonArray = $(".btn-nft")
   for (var i = 0; i < buttonArray.length-1; i++){
-      buttonArray.eq(i).attr("data-id", currentItems[i][2]);
-      buttonArray.eq(i).attr("data-price", currentItems[i][5]);
+    buttonArray.eq(i).attr("data-id", currentItems[i][2]);
+    buttonArray.eq(i).attr("data-price", currentItems[i][5]);
   };
 
   for (var i = 0; i < buttonArray.length-1; i++) {
-      buttonArray[i].addEventListener('click', async (button) =>{
-        var itemDataId = button.target.getAttribute('data-id');
-        var itemPrice = button.target.getAttribute('data-price');
-        await Market.methods.purchaseNft(mintAddress, itemDataId).send({from: ethereum.selectedAddress, value: itemPrice});
-      });
-    };
+    buttonArray[i].addEventListener('click', async (button) =>{
+      var itemDataId = button.target.getAttribute('data-id');
+      var itemPrice = button.target.getAttribute('data-price');
+      await Market.methods.purchaseNft(mintAddress, itemDataId).send({from: ethereum.selectedAddress, value: itemPrice});
+    });
+  };
 };
