@@ -1,13 +1,13 @@
 //Contract Details
 const mintAddress = "0x083EeC77fFd57632B12a4663B58d4aC7E130A39f";
 window.addEventListener('load', async () =>{
-  await $.getJSON("../blockchain/build/contracts/NftCreator.json", function(data){
+  await $.getJSON("staticBuild/NftCreator.json", function(data){
     mintABI = data.abi;
   });
 });
 const marketAddress = "0x8C791a287389c48AFF087F93c3b8E4D83D06FAf8";
 window.addEventListener('load', async () =>{
-  await $.getJSON("../blockchain/build/contracts/Market.json", function(data){
+  await $.getJSON("staticBuild/Market.json", function(data){
     marketABI = data.abi;
   });
 });
