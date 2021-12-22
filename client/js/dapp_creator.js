@@ -1,9 +1,5 @@
-//TO DO:
-// ) Complete README.md
-// ) Complete video demo
-
 //Server Details
-const serverLink = "http://3.134.160.201:3000/staticJson/";
+const serverLink = "http://localhost:3000/staticJson/";
 
 //Contract Details
 const mintAddress = "0x083EeC77fFd57632B12a4663B58d4aC7E130A39f";
