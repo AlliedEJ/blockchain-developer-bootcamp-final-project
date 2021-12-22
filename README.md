@@ -85,11 +85,11 @@ truffle migrate --network rinkeby
 ## Features
 1. Creation
 
-Users are able to utilize the platform to create unique NFTs (721) based on any linked image. Nft's will be created with the following metadata: Name, Image Link, & Description. All Nft create an associated json that is stored directly on the server.
+Users are able to utilize the platform to create unique NFTs (721) based on any linked image. Nft's will be created with the following metadata: Name, Image Link, & Description. All Nfts create an associated json that is stored directly on the server.
 
 2. Portfolio
 
-All created Nfts go to the user's personal portfolio where they can view them and set them up for sale on the Marketplace.
+All created Nfts go to the user's personal Portfolio where they can view them and set them up for sale on the Marketplace.
 
 3. Sell
 
