@@ -56,7 +56,7 @@ node server.js
 
   *When application is running on localhost, json URIs will be minted to localhost and only be viewable via localhost.*
 
-## Deploy on Testnet (Rinkeby)
+### Deploy on Testnet (Rinkeby)
 1. Create environmental variables for deployment
  - Create ```.env``` file under the ./blockchain folder
  - Define your Infura endpoint and your metamask wallet mnemonic for contract creation:
