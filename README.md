@@ -10,7 +10,7 @@ http://3.134.160.201:3000/
 
 ## Directory Structure
 - ```client```: Project's full front end including all of its javascript, html, img, and css elements.
-- ```server```: Projects backend server including its 'server.js' and json file directory.
+- ```server```: Projects backend including its 'server.js' and json file directory.
 - ```blockchain```: Projects smart contracts including ABI components, migrations, and tests.
 
 ## Running the Project Locally
