@@ -6,7 +6,7 @@ An Ethereum based dapp that allows users to create & sell their own unique ERC-7
 http://3.134.160.201:3000/
 
 ## Demo Screencast
-**Link Here**
+https://www.loom.com/share/6030df040c1244b1a94807d0e3c180d2
 
 ## Directory Structure
 - ```client```: Project's full front end including all of its javascript, html, img, and css elements.
