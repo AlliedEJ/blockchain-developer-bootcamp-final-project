@@ -2,9 +2,6 @@
 ## NFT Creation Station
 An Ethereum based dapp that allows users to create & sell their own unique ERC-721 NFTs.
 
-## Live Deployment (AWS EC2 Instance)
-http://3.134.160.201:3000/
-
 ## Demo Screencast
 https://www.loom.com/share/6030df040c1244b1a94807d0e3c180d2
 
